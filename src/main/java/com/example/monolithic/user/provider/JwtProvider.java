@@ -13,6 +13,7 @@ import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtProvider {
+    
     // key값 : yaml파일에 등록해둔 key 이름(alias)
     @Value("${jwt.secret}")
     private String secret;

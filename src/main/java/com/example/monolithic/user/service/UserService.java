@@ -2,12 +2,14 @@ package com.example.monolithic.user.service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.monolithic.common.service.RefreshTokenService;
 import com.example.monolithic.user.dao.UserRepository;
 import com.example.monolithic.user.domain.dto.UserRequestDTO;
 import com.example.monolithic.user.domain.dto.UserResponseDTO;
@@ -22,8 +24,12 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtProvider jwtProvider ;
-    private final RefreshTokenService refreshTokenService ;
+    private final JwtProvider jwtProvider;
+
+    // redis
+    @Qualifier("tokenRedis")
+    private final RedisTemplate<String, Object> redisTemplate;
+    private static final long REFRESH_TOKEN_TTL = 7 * 60 * 60 * 24;
 
     public Map<String, Object> login(UserRequestDTO request) {
 
@@ -31,7 +37,7 @@ public class UserService {
         UserEntity entity = userRepository.findById(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("user not found"));
 
-        // 해싱처리된 비밀번호 비교 
+        // 해싱 처리된 비밀번호 비교
         if (!passwordEncoder.matches(request.getPassword(), entity.getPassword())) {
             throw new RuntimeException("password not matched");
         }
@@ -44,7 +50,9 @@ public class UserService {
         String rt = jwtProvider.CreateRT(entity.getEmail());
 
         // redis에 refresh-token 저장
-        refreshTokenService.saveToken(entity.getEmail(), rt);
+        System.out.println("refreshtokenservice save token");
+        redisTemplate.opsForValue()
+                .set("RT:" + entity.getEmail(), rt, REFRESH_TOKEN_TTL, TimeUnit.SECONDS);
 
         // 발급한 토큰과 사용자정보 반환
         map.put("response", UserResponseDTO.fromEntity(entity));

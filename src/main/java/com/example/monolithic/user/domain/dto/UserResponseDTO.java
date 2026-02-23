@@ -13,12 +13,14 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRequestDTO {
+public class UserResponseDTO {
     private String email;
     private String password;
+    private String name;
 
-    // 엔티티로 변환
-    public UserEntity toEntity() {
-        return UserEntity.builder().email(email).password(password).build();
+    public static UserResponseDTO fromEntity(UserEntity entity) {
+        return UserResponseDTO.builder().email(entity.getEmail()).password(entity.getPassword())
+                .name(entity.getName()).build();
     }
+
 }

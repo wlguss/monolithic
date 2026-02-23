@@ -1,7 +1,12 @@
 package com.example.monolithic.product.ctrl;
 
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.monolithic.product.domain.dto.ProductRequestDTO;
+import com.example.monolithic.product.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -9,5 +14,13 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
 public class ProductController {
-    
+    private final ProductService productService;
+
+    @PostMapping("/create")
+    public String create(@RequestBody ProductRequestDTO dto) {
+        System.out.println("product ctrl create call");
+
+        
+        return null;
+    }
 }

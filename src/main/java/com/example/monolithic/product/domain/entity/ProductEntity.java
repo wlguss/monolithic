@@ -38,12 +38,12 @@ public class ProductEntity extends BaseTimeEntity {
     @Column // 주문(order)이 들어온 경우 재고가 있는지를 먼저 확인
     private Integer stockQty;
 
-    // 상품을 등록한 회원(user) 정보 조회  
+    // 상품을 등록한 회원(user) 정보 저장 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity user ;
 
-    // 재고 관리를 위한 업데이트
+    // 재고 관리를 위한 수량 업데이트
     public void updateStockQty(int stockQty) {
         this.stockQty = this.stockQty - stockQty;
     }

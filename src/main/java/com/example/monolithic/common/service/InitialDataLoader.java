@@ -1,0 +1,34 @@
+package com.example.monolithic.common.service;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+import com.example.monolithic.user.dao.UserRepository;
+import com.example.monolithic.user.domain.entity.UserEntity;
+
+import lombok.RequiredArgsConstructor;
+
+// 초기 설정 (ex. 더미데이터 저장)
+@Component // 객체 생성하여 컨테이너에 빈으로 등록
+@RequiredArgsConstructor
+public class InitialDataLoader implements CommandLineRunner {
+
+    private final UserRepository userRepository;
+
+    @Override
+    public void run(String... args) throws Exception {
+        System.out.println(">>>> InitialDataLoader run called .......");
+
+        if (userRepository.findById("admin@naver.com").isPresent()) {
+            return;
+        }
+
+        UserEntity user = UserEntity.builder().email("admin@naver.com")
+                .name("admin").password("admin123")
+                 .role("ADMIN").build();
+
+        userRepository.save(user) ;
+
+    }
+
+}

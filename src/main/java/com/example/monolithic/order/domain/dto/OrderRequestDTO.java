@@ -4,7 +4,6 @@ import com.example.monolithic.order.domain.entity.OrderEntity;
 import com.example.monolithic.product.domain.entity.ProductEntity;
 import com.example.monolithic.user.domain.entity.UserEntity;
 
-import io.netty.util.concurrent.OrderedEventExecutor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

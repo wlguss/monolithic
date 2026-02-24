@@ -12,7 +12,7 @@ import lombok.ToString;
 
 @Builder
 @Getter
-@Setter
+@Setter     // form 데이터로 받는 경우 반드시 추가 (JSON을 지향하는 이유)
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor

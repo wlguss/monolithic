@@ -61,7 +61,7 @@ public class SecurityConfig {
                         .permitAll() // 토큰 없이 접근 가능한 endPoint(= whitelist)
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // preflight 처리(모든 prelight 허용)
                         // admin으로 시작하는 url은 ADMIN의 사용자만 접근 가능하도록
-                        // .requestMatchers("/admin/**").hasRole("ADMIN")
+                      //  .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
 
                 )

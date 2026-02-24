@@ -14,12 +14,13 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductResponseDTO {
-    private String name ; 
-    private int price ;
-    private int stockQty ;
+    private Long id;
+    private String name;
+    private int price;
+    private int stockQty;
 
-    public static ProductRequestDTO fromEntity(ProductEntity entity){
-        return ProductRequestDTO.builder().name(entity.getName()).price(entity.getPrice())
-        .stockQty(entity.getStockQty()).build() ;
+    public static ProductResponseDTO fromEntity(ProductEntity entity) {
+        return ProductResponseDTO.builder().id(entity.getId()).name(entity.getName())
+                .price(entity.getPrice()).stockQty(entity.getStockQty()).build();
     }
 }

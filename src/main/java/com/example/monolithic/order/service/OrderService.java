@@ -27,12 +27,14 @@ public class OrderService {
     public OrderResponseDTO orderCreate(OrderRequestDTO dto) {
         System.out.println("order service orderCreate call");
 
+        // 로그인된 사용자 정보 가져오기 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         System.out.println("auth : " + auth.getName());
 
         UserEntity user = userRepository.findById(auth.getName())
                 .orElseThrow(() -> new RuntimeException("user not found"));
 
+        // DTO로 들어오는 상품ID로 product 엔티티 획득 
         ProductEntity product = productRepository.findById(dto.getProductId())
                 .orElseThrow(() -> new RuntimeException("product not found"));
 

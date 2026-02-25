@@ -1,4 +1,4 @@
-z version: '3'
+version: '3'
 
 services:
   backend: 
@@ -7,25 +7,30 @@ services:
     ports:
       - "8080:8080"
     environment:
+      # DB
       SPRING_DATASOURCE_URL: jdbc:mariadb://database:3306/inspire
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 1215
+      # JPA
       SPRING_JPA_HIBERNATE_DDL_AUTO: create
       SPRING_JPA_SHOW_SQL: true
+      # redis
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
     restart: always
-    links: 
-      - database
     depends_on:
       - database
   database:
     image: wlguss/inspire-mariadb
-    container_name: monolithic-maraidb-container
+    container_name: monolithic-mariadb-container
     ports:
       - "6033:3306"
     environment:
-      MARIADB_USER: root
-      MARIADA_ROOT_PASSWORD: 1215
+      MARIADB_ROOT_PASSWORD: 1215
       MARIADB_DATABASE: inspire
   redis: 
     image: wlguss/inspire-redis
     container_name: monolithic-redis-container
+    ports:
+      - "6379:6379"
+    restart: always

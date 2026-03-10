@@ -38,7 +38,7 @@
 spring:
     datasource: # 연결할 DB 설정 
         driver-class-name: org.mariadb.jdbc.Driver  # MariaDB와 연결할 수 있는 드라이버 클래스 
-        url: ${SPRING_DATASOURCE_URL:jdbc:mariadb://localhost:3306/inspire?useSSL_TRUE&requireSSL-true} # 로컬과 도커 환경 모두에서 사용 가능! 
+        url: ${SPRING_DATASOURCE_URL:jdbc:mariadb://localhost:3306/inspire?useSSL=TRUE&requireSSL=true} # 로컬과 도커 환경 모두에서 사용 가능! 
         username: ${SPRING_DATASOURCE_USERNAME:root}
         password: ${SPRING_DATASOURCE_USERNAME:1215}
 
